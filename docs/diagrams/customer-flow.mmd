@@ -1,0 +1,63 @@
+flowchart LR
+    U[User]
+    H[Home Route UI\napp/routes/home.tsx]
+
+    TF[typedFetch\napp/api/api-types/typed-Fetch.ts]
+    TP[typedPost\napp/api/api-types/typed-post.ts]
+    TPUT[typedPut\napp/api/api-types/typed-put.ts]
+    TD[typedDelete\napp/api/api-types/typed-delete.ts]
+
+    R[API Route\napp/api/routes/customers.ts]
+    L[loader\nGET list/filter]
+    A[action\nPOST PUT DELETE]
+
+    S[Customer Service\napp/api/services/customerService.ts]
+    DB[(MySQL user table)]
+
+    U -->|Type name, click Add Update Delete| H
+
+    H -->|Initial load or refresh| TF
+    TF -->|GET /api/customers| R
+    R --> L
+    L -->|list| S
+    S -->|SELECT| DB
+    DB --> S
+    S --> L
+    L --> R
+    R --> TF
+    TF --> H
+
+    H -->|Add| TP
+    TP -->|POST /api/customers name| R
+    R --> A
+    A -->|create| S
+    S -->|INSERT + SELECT| DB
+    DB --> S
+    S --> A
+    A --> R
+    R --> TP
+    TP --> H
+
+    H -->|Update| TPUT
+    TPUT -->|PUT /api/customers id name| R
+    R --> A
+    A -->|update| S
+    S -->|UPDATE + SELECT| DB
+    DB --> S
+    S --> A
+    A --> R
+    R --> TPUT
+    TPUT --> H
+
+    H -->|Delete| TD
+    TD -->|DELETE /api/customers id| R
+    R --> A
+    A -->|delete| S
+    S -->|DELETE + SELECT| DB
+    DB --> S
+    S --> A
+    A --> R
+    R --> TD
+    TD --> H
+
+    H -->|revalidator.revalidate| TF
