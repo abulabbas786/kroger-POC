@@ -2,6 +2,8 @@
 
 Code Deploy on Vercel.com 
 URL : https://kroger-poc.vercel.app/
+Add this Url in .env file =
+DATABASE_URL=postgresql://neondb_owner:npg_czj9CZ6FhBmU@ep-old-union-amgfyqxc-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 
 A modern, production-ready template for building full-stack React applications using React Router.
 
